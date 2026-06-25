@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini-serre – Atelier Bloc 1 S01 | CIEL Louis Lumière</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bleu:   #029AED;
+  --vert:   #8BC34A;
+  --orange: #FF5722;
+  --marine: #1E3A5F;
+  --ciel:   #5BB8E8;
+  --ciel-bg:#F0F8FF;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11pt;
+  background: #f4f7fa;
+  color: #222;
+  padding-bottom: 80px;
+}
+
+/* ── EN-TÊTE ── */
+header {
+  background: var(--marine);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 3px solid var(--bleu);
+}
+.header-logo{display:flex;align-items:center;}
+.header-lycee { font-size:9pt; color:#b0d4f0; text-align:right; }
+
+.page { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+
+/* ── PAGE DE GARDE ── */
+.garde {
+  background: white; border-radius: 8px; padding: 28px 32px;
+  margin-bottom: 24px; border-top: 6px solid var(--vert);
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.garde-titre { font-family:'Roboto',sans-serif; font-weight:700; font-size:18pt; color:var(--vert); text-align:center; margin-bottom:6px; }
+.garde-sous-titre { font-size:12pt; font-style:italic; color:var(--marine); text-align:center; margin-bottom:14px; }
+.garde-meta { text-align:center; color:var(--marine); font-size:10pt; margin-bottom:20px; }
+.garde-meta span { margin:0 10px; }
+
+.eleve-box {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  background:var(--ciel-bg); border:1px solid var(--ciel);
+  border-radius:6px; padding:14px; margin-bottom:20px;
+}
+.eleve-box label { font-size:9pt; color:#666; display:block; margin-bottom:2px; }
+.eleve-box input {
+  width:100%; border:1px solid #ccd; border-radius:4px;
+  padding:7px 10px; font-family:'Montserrat',sans-serif;
+  font-size:10pt; color:var(--marine);
+}
+.eleve-box input:focus { outline:2px solid var(--bleu); }
+
+.comp-table { width:100%; border-collapse:collapse; font-size:9.5pt; }
+.comp-table th { background:var(--ciel); color:white; font-family:'Roboto',sans-serif; font-weight:700; padding:7px 10px; border:1px solid var(--bleu); text-align:left; }
+.comp-table td { padding:6px 10px; border:1px solid #cde; }
+.comp-table tr:nth-child(even) td { background:var(--ciel-bg); }
+.comp-table .bloc-header td { background:var(--marine); color:white; font-family:'Roboto',sans-serif; font-weight:700; font-size:9pt; }
+.coche-oui { color:var(--bleu); font-size:13pt; }
+.coche-non { color:#bbb; font-size:13pt; }
+
+/* ── SECTIONS ── */
+.section { background:white; border-radius:8px; padding:24px 28px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,.07); }
+h1.partie { font-family:'Roboto',sans-serif; font-weight:700; font-size:14pt; color:var(--bleu); border-left:5px solid var(--bleu); padding-left:12px; margin-bottom:16px; }
+h2.sous-partie { font-family:'Roboto',sans-serif; font-weight:400; font-style:italic; font-size:12pt; color:var(--bleu); margin:18px 0 10px; }
+
+.consigne { border-left:4px solid var(--orange); background:#fffbf0; padding:10px 14px; border-radius:0 6px 6px 0; margin:12px 0; font-size:10.5pt; color:#444; }
+
+table.data { width:100%; border-collapse:collapse; margin:12px 0; }
+table.data th { background:var(--ciel); color:white; font-family:'Roboto',sans-serif; font-weight:700; padding:8px 12px; border:1px solid var(--bleu); text-align:left; }
+table.data td { border:1px solid #cde; padding:8px 12px; vertical-align:middle; }
+table.data tr:nth-child(even) td { background:var(--ciel-bg); }
+
+textarea.rep { width:100%; border:1px solid #ccd; border-radius:4px; padding:8px 10px; font-family:'Montserrat',sans-serif; font-size:10pt; color:var(--marine); resize:vertical; background:#fafeff; }
+textarea.rep:focus { outline:none; border-color:var(--bleu); background:white; }
+.rep-sm { min-height:55px; }
+.rep-md { min-height:85px; }
+
+input.rep-inline { width:100%; border:1px solid #ccd; border-radius:4px; padding:6px 8px; font-family:'Montserrat',sans-serif; font-size:10pt; color:var(--marine); background:#fafeff; }
+input.rep-inline:focus { outline:2px solid var(--bleu); }
+
+select.rep-select { width:100%; border:1px solid #ccd; border-radius:4px; padding:7px 8px; font-family:'Montserrat',sans-serif; font-size:10pt; color:var(--marine); background:#fafeff; }
+select.rep-select:focus { outline:2px solid var(--bleu); }
+
+.validation-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--ciel-bg); border:1px solid var(--ciel);
+  border-radius:20px; padding:6px 14px; margin:12px 0;
+  font-size:10pt; color:var(--marine);
+}
+.validation-badge input[type="checkbox"] { width:18px; height:18px; accent-color:var(--vert); cursor:pointer; }
+
+/* ── FICHES COMPOSANTS ── */
+.fiche-composant {
+  border: 2px solid var(--bleu);
+  border-radius: 8px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.fiche-header {
+  background: var(--marine);
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.fiche-header .fiche-num {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 13pt;
+  color: var(--ciel);
+}
+.fiche-header input {
+  flex: 1;
+  margin-left: 14px;
+  border: none;
+  border-bottom: 2px solid var(--ciel);
+  background: transparent;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11pt;
+  padding: 4px 6px;
+  outline: none;
+}
+.fiche-header input::placeholder { color: #7aafd0; }
+.fiche-body { padding: 16px 18px; }
+
+.fiche-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.fiche-field label { font-size:9pt; color:#666; display:block; margin-bottom:3px; font-weight:600; }
+
+.upload-zone {
+  border: 2px dashed var(--ciel);
+  border-radius: 6px;
+  background: var(--ciel-bg);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.upload-zone:hover { border-color: var(--bleu); }
+.upload-zone input[type="file"] { display:none; }
+.upload-zone .upload-text { font-size:9.5pt; color:var(--marine); font-weight:600; }
+.upload-zone .upload-hint { font-size:8.5pt; color:#888; margin-top:3px; }
+.upload-zone img { max-width:100%; margin-top:8px; border-radius:4px; }
+
+.fiche-checks { display:flex; gap:14px; flex-wrap:wrap; margin:6px 0; }
+.fiche-checks label { display:flex; align-items:center; gap:6px; cursor:pointer; font-size:10pt; }
+.fiche-checks input[type="checkbox"] { width:16px; height:16px; accent-color:var(--bleu); }
+
+.fiche-separator { border:none; border-top:1px solid #dde; margin:12px 0; }
+
+/* ── TABLEAUX TRI ── */
+.tri-table { width:100%; border-collapse:collapse; margin:14px 0; }
+.tri-table th { background:var(--marine); color:white; font-family:'Roboto',sans-serif; font-weight:700; padding:9px 12px; border:1px solid var(--marine); text-align:left; font-size:10pt; }
+.tri-table td { border:1px solid #cde; padding:8px 12px; vertical-align:top; }
+.tri-table tr:nth-child(even) td { background:var(--ciel-bg); }
+.tri-table td textarea { min-height:48px; }
+
+/* ── PIED / STICKY ── */
+footer { background:var(--marine); color:#b0d4f0; display:flex; justify-content:space-between; align-items:center; padding:8px 24px; font-size:9pt; margin-top:30px; border-top:3px solid var(--bleu); }
+.send-bar { position:fixed; bottom:0; left:0; right:0; background:white; border-top:3px solid var(--marine); display:flex; align-items:center; justify-content:space-between; padding:10px 24px; z-index:200; box-shadow:0 -3px 12px rgba(0,0,0,.12); }
+.send-info { font-size:9.5pt; color:#666; }
+.btn-send { background:var(--marine); color:white; border:none; border-radius:6px; padding:10px 22px; font-family:'Roboto',sans-serif; font-weight:700; font-size:11pt; cursor:pointer; transition:background .2s; }
+.btn-send:hover { background:var(--bleu); }
+#toast { position:fixed; bottom:70px; left:50%; transform:translateX(-50%); background:var(--marine); color:white; padding:12px 28px; border-radius:8px; font-family:'Roboto',sans-serif; font-weight:700; font-size:11pt; display:none; z-index:300; box-shadow:0 4px 16px rgba(0,0,0,.2); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo"><img src="data:image/png;base64,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" alt="Logo CIEL Louis Lumière" style="height:48px;"></div>
+  <div class="header-lycee">Lycée Louis Lumière – Chelles<br>Bac Pro 1ère CIEL</div>
+</header>
+
+<div class="page">
+
+  <!-- PAGE DE GARDE -->
+  <div class="garde">
+    <div class="garde-titre">Projet mini-serre autonome</div>
+    <div class="garde-sous-titre">Atelier Bloc 1 – S01 · Inventaire &amp; fiches composants</div>
+    <div class="garde-meta">
+      <span>📚 1ère CIEL</span>
+      <span>📅 Année 2024–2025</span>
+      <span>⏱ Durée : variable</span>
+    </div>
+
+    <div class="eleve-box">
+      <div><label for="eleve-nom">Nom</label><input id="eleve-nom" placeholder="Votre nom"></div>
+      <div><label for="eleve-prenom">Prénom</label><input id="eleve-prenom" placeholder="Votre prénom"></div>
+      <div><label for="eleve-classe">Classe</label><input id="eleve-classe" value="1CIEL"></div>
+      <div><label for="eleve-date">Date</label><input id="eleve-date" type="date"></div>
+    </div>
+
+    <table class="comp-table">
+      <thead><tr><th>Code</th><th>Compétence</th><th style="text-align:center">Mobilisée</th></tr></thead>
+      <tbody>
+        <tr class="bloc-header"><td colspan="3">Bloc 1 – Réalisation et maintenance de produits électroniques (U2)</td></tr>
+        <tr><td>C03</td><td>Participer à un projet</td><td style="text-align:center"><span class="coche-oui">☑</span></td></tr>
+        <tr><td>C07</td><td>Réaliser des maquettes et prototypes</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+        <tr><td>C11</td><td>Maintenir un système électronique ou réseau informatique</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+        <tr class="bloc-header"><td colspan="3">Bloc 2 – Mise en œuvre de réseaux informatiques (U31)</td></tr>
+        <tr><td>C06</td><td>Valider la conformité d'une installation</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+        <tr><td>C09</td><td>Installer les éléments d'un système électronique ou informatique</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+        <tr><td>C10</td><td>Exploiter un réseau informatique</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+        <tr class="bloc-header"><td colspan="3">Bloc 3 – Valorisation de la donnée et cybersécurité (U32)</td></tr>
+        <tr><td>C01</td><td>Communiquer en situation professionnelle (français/anglais)</td><td style="text-align:center"><span class="coche-oui">☑</span></td></tr>
+        <tr><td>C04</td><td>Analyser une structure matérielle et logicielle</td><td style="text-align:center"><span class="coche-oui">☑</span></td></tr>
+        <tr><td>C08</td><td>Coder</td><td style="text-align:center"><span class="coche-non">☐</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ÉTAPE 1 – TRI PAR TYPE -->
+  <div class="section">
+    <h1 class="partie">Étape 1 – Trier les composants par type</h1>
+    <div class="consigne">Observez les composants fournis et classez-les dans le tableau ci-dessous selon leur type.</div>
+
+    <table class="tri-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Type</th>
+          <th>Composants identifiés (noms ou descriptions)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Résistances</strong></td><td><textarea class="rep rep-sm" id="tri-type-resistance" placeholder="Listez les résistances observées…"></textarea></td></tr>
+        <tr><td><strong>Condensateurs</strong></td><td><textarea class="rep rep-sm" id="tri-type-condensateur" placeholder="Listez les condensateurs observés…"></textarea></td></tr>
+        <tr><td><strong>Semi-conducteurs</strong><br><span style="font-size:8.5pt;color:#888;">(transistors, diodes…)</span></td><td><textarea class="rep rep-sm" id="tri-type-semi" placeholder="Listez les semi-conducteurs observés…"></textarea></td></tr>
+        <tr><td><strong>Circuits intégrés</strong></td><td><textarea class="rep rep-sm" id="tri-type-ci" placeholder="Listez les circuits intégrés observés…"></textarea></td></tr>
+        <tr><td><strong>Capteurs</strong></td><td><textarea class="rep rep-sm" id="tri-type-capteur" placeholder="Listez les capteurs observés…"></textarea></td></tr>
+        <tr><td><strong>Actionneurs</strong><br><span style="font-size:8.5pt;color:#888;">(pompe, moteur…)</span></td><td><textarea class="rep rep-sm" id="tri-type-actionneur" placeholder="Listez les actionneurs observés…"></textarea></td></tr>
+        <tr><td><strong>Indicateurs</strong><br><span style="font-size:8.5pt;color:#888;">(LED, afficheur…)</span></td><td><textarea class="rep rep-sm" id="tri-type-indicateur" placeholder="Listez les indicateurs observés…"></textarea></td></tr>
+        <tr><td><strong>Alimentation</strong></td><td><textarea class="rep rep-sm" id="tri-type-alim" placeholder="Listez les éléments d'alimentation observés…"></textarea></td></tr>
+        <tr><td><strong>Autre</strong></td><td><textarea class="rep rep-sm" id="tri-type-autre" placeholder="Autres composants…"></textarea></td></tr>
+      </tbody>
+    </table>
+
+    <div class="validation-badge">
+      <input type="checkbox" id="valid-tri-type">
+      <label for="valid-tri-type">✅ Validation enseignant obtenue pour le tri par type</label>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 – TRI FONCTIONNEL -->
+  <div class="section">
+    <h1 class="partie">Étape 2 – Trier les composants par fonction</h1>
+    <div class="consigne">Classez les mêmes composants selon leur rôle fonctionnel dans le système mini-serre.</div>
+
+    <table class="tri-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Fonction</th>
+          <th style="width:39%">Composants</th>
+          <th style="width:39%">Justification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mesurer</strong><br><span style="font-size:8.5pt;color:#888;">Acquérir une grandeur physique</span></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-mesurer-comp" placeholder="Composants…"></textarea></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-mesurer-just" placeholder="Pourquoi ?"></textarea></td>
+        </tr>
+        <tr>
+          <td><strong>Traiter / Décider</strong><br><span style="font-size:8.5pt;color:#888;">Comparer, commander</span></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-traiter-comp" placeholder="Composants…"></textarea></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-traiter-just" placeholder="Pourquoi ?"></textarea></td>
+        </tr>
+        <tr>
+          <td><strong>Agir</strong><br><span style="font-size:8.5pt;color:#888;">Produire une action physique</span></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-agir-comp" placeholder="Composants…"></textarea></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-agir-just" placeholder="Pourquoi ?"></textarea></td>
+        </tr>
+        <tr>
+          <td><strong>Indiquer</strong><br><span style="font-size:8.5pt;color:#888;">Informer l'utilisateur</span></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-indiquer-comp" placeholder="Composants…"></textarea></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-indiquer-just" placeholder="Pourquoi ?"></textarea></td>
+        </tr>
+        <tr>
+          <td><strong>Alimenter</strong><br><span style="font-size:8.5pt;color:#888;">Fournir l'énergie</span></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-alim-comp" placeholder="Composants…"></textarea></td>
+          <td><textarea class="rep rep-sm" id="tri-fn-alim-just" placeholder="Pourquoi ?"></textarea></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="validation-badge">
+      <input type="checkbox" id="valid-tri-fn">
+      <label for="valid-tri-fn">✅ Validation enseignant obtenue pour le tri fonctionnel</label>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 – FICHES COMPOSANTS -->
+  <div class="section">
+    <h1 class="partie">Étape 3 – Fiches composants (15 fiches)</h1>
+    <div class="consigne">
+      Pour chaque composant, complétez la fiche en observant le matériel réel.
+      Aidez-vous de recherches internet. Vous pouvez coller des photos en petit format.
+      Dans le champ <strong>« Repère schéma »</strong>, indiquez le repère du composant noté sur le schéma structurel.
+    </div>
+    <div id="fiches-container"></div>
+  </div>
+
+  <!-- AUTO-ÉVALUATION -->
+  <div class="section">
+    <h1 class="partie">Auto-évaluation</h1>
+    <div class="consigne">Évaluez honnêtement votre niveau sur chaque critère :</div>
+    <table class="data">
+      <thead>
+        <tr>
+          <th style="width:52%">Critère</th>
+          <th style="text-align:center">★★★ Maîtrisé</th>
+          <th style="text-align:center">★★☆ En cours</th>
+          <th style="text-align:center">★☆☆ À revoir</th>
+          <th style="text-align:center">? Non traité</th>
+        </tr>
+      </thead>
+      <tbody id="autoeval-body"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<footer>
+  <span>Mini-serre – Atelier Bloc 1 S01</span>
+  <span>Lycée Louis Lumière – Chelles | Bac Pro 1ère CIEL</span>
+</footer>
+
+<div class="send-bar">
+  <div class="send-info">Vérifiez que tous les champs sont remplis avant de générer le fichier.</div>
+  <button class="btn-send" onclick="genererJSON()">⬇ Télécharger mes réponses (.json)</button>
+</div>
+<div id="toast">✅ Fichier téléchargé avec succès !</div>
+
+<script>
+document.getElementById('eleve-date').valueAsDate = new Date();
+
+// ── Génération des 15 fiches composants ──
+const container = document.getElementById('fiches-container');
+const familles = ['Passif','Capteur','Actif','Actionneur','Indicateur'];
+const fonctions = ['Mesurer','Traiter / Décider','Agir','Indiquer','Alimenter'];
+const chaines   = ['Arrosage','Indication de température','Les deux','Alimentation générale'];
+
+for (let i = 1; i <= 15; i++) {
+  const div = document.createElement('div');
+  div.className = 'fiche-composant';
+  div.innerHTML = `
+    <div class="fiche-header">
+      <span class="fiche-num">Composant ${i}</span>
+      <input id="fc${i}-nom" placeholder="Nom du composant…" oninput="majTitreComposant(${i})">
+    </div>
+    <div class="fiche-body">
+
+      <div class="fiche-grid">
+        <div class="fiche-field">
+          <label>Famille</label>
+          <select class="rep-select" id="fc${i}-famille">
+            <option value="">— Choisir —</option>
+            ${familles.map(f=>`<option value="${f}">${f}</option>`).join('')}
+          </select>
+        </div>
+        <div class="fiche-field">
+          <label>Nombre de pattes / connexions</label>
+          <input class="rep-inline" id="fc${i}-pattes" placeholder="ex : 3">
+        </div>
+        <div class="fiche-field">
+          <label>Repère sur le schéma structurel</label>
+          <input class="rep-inline" id="fc${i}-repere" placeholder="ex : R1, C3, TR1…">
+        </div>
+        <div class="fiche-field">
+          <label>Fonction dans la mini-serre</label>
+          <select class="rep-select" id="fc${i}-fonction">
+            <option value="">— Choisir —</option>
+            ${fonctions.map(f=>`<option value="${f}">${f}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="fiche-field" style="margin-bottom:12px;">
+        <label>Chaîne fonctionnelle concernée</label>
+        <select class="rep-select" id="fc${i}-chaine">
+          <option value="">— Choisir —</option>
+          ${chaines.map(c=>`<option value="${c}">${c}</option>`).join('')}
+        </select>
+      </div>
+
+      <div class="fiche-grid" style="margin-bottom:12px;">
+        <div class="fiche-field">
+          <label>Description / aspect physique</label>
+          <textarea class="rep rep-sm" id="fc${i}-description" placeholder="Forme, couleur, marquage…"></textarea>
+        </div>
+        <div class="fiche-field">
+          <label>Photo ou dessin (optionnel)</label>
+          <div class="upload-zone" onclick="document.getElementById('img-fc${i}').click()">
+            <input type="file" id="img-fc${i}" accept="image/*" onchange="compresserImage(this,'prev-fc${i}','hint-fc${i}',function(b){imgData['fc${i}']=b})">
+            <div class="upload-text">📎 Cliquer pour ajouter une photo</div>
+            <div class="upload-hint" id="hint-fc${i}">JPG, PNG – compression automatique</div>
+            <img id="prev-fc${i}" style="display:none; max-width:100%; margin-top:6px; border-radius:4px;">
+          </div>
+        </div>
+      </div>
+
+      <hr class="fiche-separator">
+
+      <div class="fiche-field" style="margin-bottom:10px;">
+        <label>Principe de fonctionnement (mots simples)</label>
+        <textarea class="rep rep-md" id="fc${i}-principe" placeholder="Expliquez comment fonctionne ce composant…"></textarea>
+      </div>
+
+      <div class="fiche-field" style="margin-bottom:10px;">
+        <label>Lien grandeur physique ↔ effet électrique</label>
+        <textarea class="rep rep-sm" id="fc${i}-lien" placeholder="ex : CTN : température ↔ résistance"></textarea>
+      </div>
+
+      <div class="fiche-field" style="margin-bottom:10px;">
+        <label>Composants voisins / avec quoi fonctionne-t-il ?</label>
+        <textarea class="rep rep-sm" id="fc${i}-voisins" placeholder="Composants avec lesquels il est connecté…"></textarea>
+      </div>
+
+      <div class="fiche-field">
+        <label>Remarque particulière</label>
+        <textarea class="rep rep-sm" id="fc${i}-remarque" placeholder="Précautions, erreurs possibles, informations spéciales…"></textarea>
+      </div>
+
+    </div>
+  `;
+  container.appendChild(div);
+}
+
+// ── Images ──
+const imgData = {};
+function compresserImage(input, idPrev, idHint, callback) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = new Image();
+    img.onload = function() {
+      const MAX = 900;
+      let w = img.width, h = img.height;
+      if (w > MAX || h > MAX) {
+        if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
+        else       { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const b64 = canvas.toDataURL('image/jpeg', 0.72);
+      document.getElementById(idPrev).src = b64;
+      document.getElementById(idPrev).style.display = 'block';
+      const kb = Math.round(b64.length * 0.75 / 1024);
+      document.getElementById(idHint).textContent = `Image : ${w}×${h}px – ~${kb} Ko`;
+      callback(b64);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function majTitreComposant(i) {
+  // Pas de mise à jour dynamique nécessaire
+}
+
+// ── Auto-évaluation ──
+const criteres = [
+  "Je sais trier des composants par type",
+  "Je sais trier des composants par fonction",
+  "Je sais identifier la famille d'un composant",
+  "Je sais expliquer le rôle d'un composant dans le système",
+  "Je sais faire le lien entre un composant réel et le schéma",
+  "Je sais expliquer un principe de fonctionnement avec des mots simples"
+];
+const niveaux = ['maitrise','en_cours','a_revoir','non_traite'];
+const tbody = document.getElementById('autoeval-body');
+criteres.forEach((c, i) => {
+  const tr = document.createElement('tr');
+  let html = `<td>${c}</td>`;
+  niveaux.forEach((n, j) => {
+    html += `<td style="text-align:center"><input type="radio" name="ae${i}" id="ae${i}_${j}" value="${n}" style="accent-color:var(--bleu);transform:scale(1.3)"></td>`;
+  });
+  tr.innerHTML = html;
+  tbody.appendChild(tr);
+});
+
+// ── Génération JSON ──
+function genererJSON() {
+  const nom    = document.getElementById('eleve-nom').value.trim();
+  const prenom = document.getElementById('eleve-prenom').value.trim();
+  const classe = document.getElementById('eleve-classe').value.trim();
+  const date   = document.getElementById('eleve-date').value;
+
+  const fiches = {};
+  for (let i = 1; i <= 15; i++) {
+    fiches[`composant_${i}`] = {
+      nom:         v(`fc${i}-nom`),
+      famille:     v(`fc${i}-famille`),
+      pattes:      v(`fc${i}-pattes`),
+      repere:      v(`fc${i}-repere`),
+      fonction:    v(`fc${i}-fonction`),
+      chaine:      v(`fc${i}-chaine`),
+      description: v(`fc${i}-description`),
+      principe:    v(`fc${i}-principe`),
+      lien_grandeur: v(`fc${i}-lien`),
+      voisins:     v(`fc${i}-voisins`),
+      remarque:    v(`fc${i}-remarque`),
+      photo:       imgData[`fc${i}`] || null
+    };
+  }
+
+  const autoEval = {};
+  criteres.forEach((c, i) => {
+    let niveau = 'non_traite';
+    niveaux.forEach((n, j) => {
+      const r = document.getElementById(`ae${i}_${j}`);
+      if (r && r.checked) niveau = n;
+    });
+    autoEval[`critere_${i+1}`] = { critere: c, niveau };
+  });
+
+  const data = {
+    meta: {
+      devoir: "Mini-serre – Atelier Bloc 1 S01",
+      eleve: { nom, prenom, classe },
+      date,
+      genere_le: new Date().toISOString()
+    },
+    etape1_tri_type: {
+      resistance: v('tri-type-resistance'), condensateur: v('tri-type-condensateur'),
+      semi_conducteur: v('tri-type-semi'), circuit_integre: v('tri-type-ci'),
+      capteur: v('tri-type-capteur'), actionneur: v('tri-type-actionneur'),
+      indicateur: v('tri-type-indicateur'), alimentation: v('tri-type-alim'),
+      autre: v('tri-type-autre'),
+      validation_enseignant: document.getElementById('valid-tri-type').checked
+    },
+    etape2_tri_fonctionnel: {
+      mesurer:  { composants: v('tri-fn-mesurer-comp'),  justification: v('tri-fn-mesurer-just') },
+      traiter:  { composants: v('tri-fn-traiter-comp'),  justification: v('tri-fn-traiter-just') },
+      agir:     { composants: v('tri-fn-agir-comp'),     justification: v('tri-fn-agir-just') },
+      indiquer: { composants: v('tri-fn-indiquer-comp'), justification: v('tri-fn-indiquer-just') },
+      alimenter:{ composants: v('tri-fn-alim-comp'),     justification: v('tri-fn-alim-just') },
+      validation_enseignant: document.getElementById('valid-tri-fn').checked
+    },
+    etape3_fiches_composants: fiches,
+    auto_evaluation: autoEval
+  };
+
+  const safeName = (nom + prenom).replace(/[^a-zA-Z0-9]/g,'') || 'Eleve';
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `${safeName}_MiniSerre_Bloc1_S01.json`; a.click();
+  URL.revokeObjectURL(url);
+
+  const toast = document.getElementById('toast');
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 3000);
+}
+
+function v(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : '';
+}
+</script>
+</body>
+</html>
